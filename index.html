@@ -41,17 +41,17 @@ ARS Mobile Shop
 
 <a href="contact.html">Contact</a>
 
+<a href="favorites.html">Favorites</a>
+
+<a href="orders.html">Orders</a>
+
+<a href="admin.html">Admin</a>
+
 <a href="login.html"
-class="nav-btn">
+class="nav-btn"
+id="loginBtn">
 
 Login
-
-</a>
-
-<a href="signup.html"
-class="nav-btn signup-btn">
-
-Signup
 
 </a>
 
@@ -61,7 +61,7 @@ Signup
 
 </header>
 
-<!-- Hero -->
+<!-- HERO -->
 
 <section class="hero">
 
@@ -86,29 +86,35 @@ Browse Mobiles
 
 </section>
 
-<!-- Search -->
+<!-- SEARCH -->
 
-<section class="search-section">
+<section class="categories">
+
+<h2>Search Mobiles</h2>
 
 <input
 type="text"
 id="searchInput"
-placeholder="Search mobiles..."
+
+placeholder="Search mobile..."
+
+style="
+width:100%;
+max-width:450px;
+padding:18px;
+border:none;
+outline:none;
+border-radius:14px;
+background:#1e293b;
+color:white;
+font-size:16px;
+margin-bottom:40px;
+"
+
 onkeyup="searchPhones()">
 
-<button>
-Search
-</button>
-
-</section>
-
-<!-- Categories -->
-
-<section class="categories">
-
-<h2>Popular Brands</h2>
-
-<div class="category-grid">
+<div class="category-grid"
+id="homeMobiles">
 
 <div class="category-card phone-card">
 
@@ -116,10 +122,15 @@ Search
 
 <h3>iPhone</h3>
 
-<button class="fav-btn"
-onclick="saveFavorite('iPhone')">
+<p class="price">
 
-❤ Favorite
+Premium Apple Phones
+
+</p>
+
+<button class="btn">
+
+View
 
 </button>
 
@@ -131,10 +142,15 @@ onclick="saveFavorite('iPhone')">
 
 <h3>Samsung</h3>
 
-<button class="fav-btn"
-onclick="saveFavorite('Samsung')">
+<p class="price">
 
-❤ Favorite
+Flagship Android Phones
+
+</p>
+
+<button class="btn">
+
+View
 
 </button>
 
@@ -146,10 +162,15 @@ onclick="saveFavorite('Samsung')">
 
 <h3>Xiaomi</h3>
 
-<button class="fav-btn"
-onclick="saveFavorite('Xiaomi')">
+<p class="price">
 
-❤ Favorite
+Best Budget Phones
+
+</p>
+
+<button class="btn">
+
+View
 
 </button>
 
@@ -159,17 +180,27 @@ onclick="saveFavorite('Xiaomi')">
 
 </section>
 
-<!-- Slider -->
+<!-- SLIDER -->
 
-<section class="slider">
+<section class="categories">
 
-<img id="sliderImage"
+<h2>Featured Mobiles</h2>
 
-src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=1600&auto=format&fit=crop">
+<img
+id="sliderImage"
+
+src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=1600&auto=format&fit=crop"
+
+style="
+width:100%;
+height:450px;
+object-fit:cover;
+border-radius:24px;
+">
 
 </section>
 
-<!-- Sell -->
+<!-- SELL -->
 
 <section class="sell-form">
 
@@ -190,7 +221,13 @@ type="text"
 id="phoneCondition"
 placeholder="Phone Condition">
 
-<button onclick="sendWhatsApp()">
+<textarea
+id="sellDescription"
+placeholder="Phone Details">
+</textarea>
+
+<button onclick="sendWhatsApp()"
+class="btn">
 
 Submit
 
@@ -198,38 +235,65 @@ Submit
 
 </section>
 
-<!-- Popup -->
+<!-- ABOUT -->
 
-<div class="popup"
-id="popup">
+<section class="categories">
 
-<div class="popup-content">
+<h2>About ARS Mobile Shop</h2>
 
-<span class="close"
-onclick="closePopup()">
-
-&times;
-
-</span>
-
-<h2 id="popupTitle"></h2>
+<div class="details-box">
 
 <p>
-Premium Used Smartphone
+
+ARS Mobile Shop is a trusted used smartphone marketplace in Bangladesh.
+
+Buy and sell used phones safely with modern features like login system, favorites, orders, Firebase cloud database, admin panel and dynamic mobile listings.
+
+We provide quality smartphones with trusted service and easy communication.
+
 </p>
 
-<button class="btn"
-onclick="saveOrder(document.getElementById('popupTitle').innerText)">
+</div>
 
-Buy Now
+</section>
 
-</button>
+<!-- CONTACT -->
+
+<section class="categories">
+
+<h2>Contact Us</h2>
+
+<div class="details-box">
+
+<p>
+📧 Email:
+rocky.work85@gmail.com
+</p>
+
+<p>
+📱 WhatsApp:
++8801626775979
+</p>
+
+<p>
+📍 Location:
+Dhaka, Bangladesh
+</p>
+
+<br>
+
+<a href="https://wa.me/8801626775979"
+class="btn">
+
+Chat on WhatsApp
+
+</a>
 
 </div>
 
-</div>
+</section>
 
-<!-- Messenger -->
+<!-- MESSENGER -->
 
 <a href="https://m.me/jubayermahmudalamin.99"
 
@@ -241,6 +305,8 @@ target="_blank">
 
 </a>
 
+<!-- FOOTER -->
+
 <footer>
 
 <p>
@@ -251,7 +317,7 @@ target="_blank">
 
 <script>
 
-// Search
+// SEARCH
 
 function searchPhones(){
 
@@ -281,33 +347,7 @@ card.style.display="none";
 
 }
 
-// Popup
-
-let phoneCards =
-document.querySelectorAll(".phone-card");
-
-phoneCards.forEach(card=>{
-
-card.addEventListener("click",()=>{
-
-document.getElementById("popup")
-.style.display="flex";
-
-document.getElementById("popupTitle")
-.innerText=card.innerText;
-
-});
-
-});
-
-function closePopup(){
-
-document.getElementById("popup")
-.style.display="none";
-
-}
-
-// Slider
+// SLIDER
 
 let images=[
 
@@ -336,38 +376,42 @@ document.getElementById("sliderImage")
 
 },3000);
 
-// WhatsApp
+// WHATSAPP
 
 function sendWhatsApp(){
 
 let model =
-
 document.getElementById("phoneModel")
 .value;
 
 let price =
-
 document.getElementById("phonePrice")
 .value;
 
 let condition =
-
 document.getElementById("phoneCondition")
+.value;
+
+let details =
+document.getElementById("sellDescription")
 .value;
 
 let message =
 
-`📱 Phone Sell Request %0A%0A
+`📱 Phone Sell Request
 
-📌 Model: ${model}%0A
+📌 Model: ${model}
 
-💰 Price: ${price}%0A
+💰 Price: ${price}
 
-⚡ Condition: ${condition}`;
+⚡ Condition: ${condition}
+
+📝 Details:
+${details}`;
 
 window.open(
 
-`https://wa.me/8801626775979?text=${message}`,
+`https://wa.me/8801626775979?text=${encodeURIComponent(message)}`,
 
 '_blank'
 
@@ -388,21 +432,12 @@ from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {
 
 getAuth,
-onAuthStateChanged
+onAuthStateChanged,
+signOut
 
 }
 
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-import {
-
-getFirestore,
-collection,
-addDoc
-
-}
-
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
 
@@ -428,34 +463,26 @@ initializeApp(firebaseConfig);
 const auth =
 getAuth(app);
 
-const db =
-getFirestore(app);
-
-let currentUser=null;
-
-// AUTH
+// AUTH CHECK
 
 onAuthStateChanged(auth,(user)=>{
 
 if(user){
 
-currentUser=user;
+document.getElementById("loginBtn")
+.style.display="none";
 
-let userName =
-localStorage.getItem("userName");
+let photo =
+user.photoURL ||
 
-let userPhoto =
-localStorage.getItem("userPhoto");
-
-let userNumber =
-localStorage.getItem("userNumber");
+"https://cdn-icons-png.flaticon.com/512/149/149071.png";
 
 document.getElementById("userProfile")
 .innerHTML=`
 
 <div class="profile-menu">
 
-<img src="${userPhoto}"
+<img src="${photo}"
 
 class="profile-pic"
 
@@ -464,21 +491,41 @@ onclick="toggleMenu()">
 <div class="dropdown-menu"
 id="dropdownMenu">
 
-<h3>${userName}</h3>
+<h3>
 
-<p>${userNumber || ""}</p>
+${user.displayName || "User"}
+
+</h3>
+
+<p>
+
+${user.email}
+
+</p>
 
 <hr>
 
-<a href="#">My Account</a>
+<a href="favorites.html">
 
-<a href="favorites.html">My Favorites</a>
+My Favorites
 
-<a href="orders.html">My Orders</a>
+</a>
 
-<a href="#">Recently Viewed</a>
+<a href="orders.html">
 
-<a href="#" onclick="logout()">
+My Orders
+
+</a>
+
+<a href="admin.html">
+
+Admin Panel
+
+</a>
+
+<a href="#"
+
+onclick="logout()">
 
 Logout
 
@@ -490,83 +537,9 @@ Logout
 
 `;
 
-document.querySelector(".nav-btn")
-.style.display="none";
-
-document.querySelector(".signup-btn")
-.style.display="none";
-
 }
 
 });
-
-// FAVORITES
-
-window.saveFavorite = async function(phone){
-
-if(!currentUser){
-
-alert("Please login first");
-
-return;
-
-}
-
-await addDoc(
-
-collection(
-db,
-"users",
-currentUser.uid,
-"favorites"
-),
-
-{
-
-phone:phone,
-time:Date.now()
-
-}
-
-);
-
-alert("Added to Favorites 😄");
-
-}
-
-// ORDERS
-
-window.saveOrder = async function(phone){
-
-if(!currentUser){
-
-alert("Please login first");
-
-return;
-
-}
-
-await addDoc(
-
-collection(
-db,
-"users",
-currentUser.uid,
-"orders"
-),
-
-{
-
-phone:phone,
-time:Date.now()
-
-}
-
-);
-
-alert("Order Placed 😄");
-
-}
 
 // MENU
 
@@ -581,9 +554,12 @@ document.getElementById("dropdownMenu")
 
 window.logout=function(){
 
-localStorage.clear();
+signOut(auth)
+.then(()=>{
 
 location.reload();
+
+});
 
 }
 

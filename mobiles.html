@@ -8,7 +8,7 @@
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
 
-<title>Mobiles - ARS Mobile Shop</title>
+<title>Mobiles</title>
 
 <link rel="stylesheet"
 href="style.css">
@@ -111,25 +111,61 @@ html += `
 
 <div class="category-card">
 
-<img src="${doc.data().image}"
-
-style="
-width:100%;
-height:250px;
-object-fit:cover;
-border-radius:16px;
-margin-bottom:20px;
-">
+<img src="${doc.data().image}">
 
 <h3>${doc.data().name}</h3>
 
-<p style="
-font-size:22px;
-margin-top:10px;
-color:#5eead4;
-">
+<p class="price">
 
 ৳${doc.data().price}
+
+</p>
+
+<button class="btn"
+
+onclick="toggleDetails('${doc.id}')">
+
+Details
+
+</button>
+
+<div
+class="details-box"
+id="details-${doc.id}"
+
+style="display:none;">
+
+<p>
+
+RAM:
+${doc.data().ram}
+
+</p>
+
+<p>
+
+Storage:
+${doc.data().rom}
+
+</p>
+
+<p>
+
+Battery:
+${doc.data().battery}
+
+</p>
+
+<p>
+
+Condition:
+${doc.data().condition}
+
+</p>
+
+<p class="description">
+
+${doc.data().description}
 
 </p>
 
@@ -139,6 +175,8 @@ class="btn">
 Contact Seller
 
 </a>
+
+</div>
 
 </div>
 
@@ -152,6 +190,23 @@ document.getElementById("mobilesList")
 }
 
 loadMobiles();
+
+window.toggleDetails = function(id){
+
+let box =
+document.getElementById("details-"+id);
+
+if(box.style.display==="none"){
+
+box.style.display="block";
+
+}else{
+
+box.style.display="none";
+
+}
+
+}
 
 </script>
 

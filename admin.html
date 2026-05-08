@@ -17,6 +17,35 @@ href="style.css">
 
 <body>
 
+<script>
+
+// NAME SECURITY
+
+let adminName =
+prompt("Enter Your Name");
+
+if(
+
+adminName !== "Rocky"
+
+&&
+
+adminName !== "Alamin"
+
+&&
+
+adminName !== "Shimul"
+
+){
+
+alert("Access Denied");
+
+window.location.href="index.html";
+
+}
+
+</script>
+
 <section class="sell-form">
 
 <h2>Admin Panel</h2>
@@ -93,7 +122,8 @@ collection,
 addDoc,
 getDocs,
 deleteDoc,
-doc
+doc,
+updateDoc
 
 }
 
@@ -148,7 +178,7 @@ document.getElementById("phoneCondition").value;
 let description =
 document.getElementById("phoneDescription").value;
 
-// IMAGE FILE
+// IMAGE
 
 let file =
 document.getElementById("phoneImageFile")
@@ -162,13 +192,15 @@ return;
 
 }
 
-let reader = new FileReader();
+let reader =
+new FileReader();
 
 reader.readAsDataURL(file);
 
 reader.onload = async function(){
 
-let image = reader.result;
+let image =
+reader.result;
 
 await addDoc(
 
@@ -202,7 +234,10 @@ location.reload();
 async function loadMobiles(){
 
 const querySnapshot =
-await getDocs(collection(db,"mobiles"));
+
+await getDocs(
+collection(db,"mobiles")
+);
 
 let html="";
 
@@ -223,7 +258,30 @@ html += `
 </p>
 
 <button class="btn"
-onclick="deleteMobile('${mobile.id}')">
+
+onclick="editMobile(
+
+'${mobile.id}',
+
+'${mobile.data().name}',
+
+'${mobile.data().price}'
+
+)">
+
+Edit
+
+</button>
+
+<br><br>
+
+<button class="btn"
+
+onclick="deleteMobile(
+
+'${mobile.id}'
+
+)">
 
 Delete
 
@@ -242,15 +300,58 @@ document.getElementById("adminMobiles")
 
 loadMobiles();
 
-// DELETE MOBILE
+// DELETE
 
 window.deleteMobile = async function(id){
 
-await deleteDoc(doc(db,"mobiles",id));
+await deleteDoc(
+
+doc(db,"mobiles",id)
+
+);
 
 alert("Deleted 😄");
 
 location.reload();
+
+}
+
+// EDIT
+
+window.editMobile = async function(
+
+id,
+oldName,
+oldPrice
+
+){
+
+let newName =
+prompt("New Name",oldName);
+
+let newPrice =
+prompt("New Price",oldPrice);
+
+if(newName && newPrice){
+
+await updateDoc(
+
+doc(db,"mobiles",id),
+
+{
+
+name:newName,
+price:newPrice
+
+}
+
+);
+
+alert("Updated 😄");
+
+location.reload();
+
+}
 
 }
 

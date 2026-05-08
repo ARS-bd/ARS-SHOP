@@ -22,6 +22,16 @@ href="style.css">
 <h2>Create Account</h2>
 
 <input
+type="text"
+id="name"
+placeholder="Enter Name">
+
+<input
+type="text"
+id="number"
+placeholder="Enter Phone Number">
+
+<input
 type="email"
 id="email"
 placeholder="Enter Email">
@@ -31,9 +41,10 @@ type="password"
 id="password"
 placeholder="Enter Password">
 
-<button onclick="signup()">
+<button onclick="signup()"
+class="btn">
 
-Signup
+Signup With Email
 
 </button>
 
@@ -64,6 +75,18 @@ createUserWithEmailAndPassword
 
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
+import {
+
+getFirestore,
+
+doc,
+
+setDoc
+
+}
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
 // Firebase Config
 
 const firebaseConfig = {
@@ -84,17 +107,28 @@ measurementId: "G-VFNPR94GKH"
 
 };
 
-// Initialize Firebase
-
 const app =
 initializeApp(firebaseConfig);
 
 const auth =
 getAuth(app);
 
-// Signup Function
+const db =
+getFirestore(app);
 
-window.signup = function(){
+// Signup
+
+window.signup = async function(){
+
+let name =
+
+document.getElementById("name")
+.value;
+
+let number =
+
+document.getElementById("number")
+.value;
 
 let email =
 
@@ -112,7 +146,17 @@ email,
 password
 )
 
-.then((userCredential)=>{
+.then(async(userCredential)=>{
+
+const user = userCredential.user;
+
+await setDoc(doc(db,"users",user.uid),{
+
+name:name,
+number:number,
+email:email
+
+});
 
 alert("Signup Successful 😄");
 

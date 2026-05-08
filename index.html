@@ -61,7 +61,7 @@ Signup
 style="
 display:flex;
 align-items:center;
-gap:10px;
+gap:12px;
 margin-left:20px;
 ">
 
@@ -215,7 +215,7 @@ Buy Now
 
 </div>
 
-<!-- Messenger Button -->
+<!-- Messenger -->
 
 <a href="https://m.me/jubayermahmudalamin.99"
 
@@ -391,6 +391,9 @@ localStorage.getItem("userName");
 let userPhoto =
 localStorage.getItem("userPhoto");
 
+let userNumber =
+localStorage.getItem("userNumber");
+
 if(userName){
 
 document.getElementById("userProfile")
@@ -402,9 +405,33 @@ style="
 width:45px;
 height:45px;
 border-radius:50%;
+object-fit:cover;
+border:2px solid #5eead4;
 ">
 
-<span>${userName}</span>
+<div style="
+display:flex;
+flex-direction:column;
+">
+
+<span style="
+font-weight:bold;
+">
+
+${userName}
+
+</span>
+
+<span style="
+font-size:12px;
+color:#94a3b8;
+">
+
+${userNumber || ""}
+
+</span>
+
+</div>
 
 <button onclick="logout()"
 class="fav-btn">
@@ -415,7 +442,15 @@ Logout
 
 `;
 
+document.querySelector(".nav-btn")
+.style.display="none";
+
+document.querySelector(".signup-btn")
+.style.display="none";
+
 }
+
+// Logout
 
 function logout(){
 

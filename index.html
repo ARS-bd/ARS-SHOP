@@ -55,6 +55,18 @@ Signup
 
 </a>
 
+<!-- User Profile -->
+
+<div id="userProfile"
+style="
+display:flex;
+align-items:center;
+gap:10px;
+margin-left:20px;
+">
+
+</div>
+
 </nav>
 
 </header>
@@ -368,6 +380,48 @@ window.open(
 '_blank'
 
 );
+
+}
+
+// User Profile
+
+let userName =
+localStorage.getItem("userName");
+
+let userPhoto =
+localStorage.getItem("userPhoto");
+
+if(userName){
+
+document.getElementById("userProfile")
+.innerHTML=`
+
+<img src="${userPhoto}"
+
+style="
+width:45px;
+height:45px;
+border-radius:50%;
+">
+
+<span>${userName}</span>
+
+<button onclick="logout()"
+class="fav-btn">
+
+Logout
+
+</button>
+
+`;
+
+}
+
+function logout(){
+
+localStorage.clear();
+
+location.reload();
 
 }
 

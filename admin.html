@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Admin Panel</title>
+
+<link rel="stylesheet"
+href="style.css">
+
+</head>
+
+<body>
+
+<section class="sell-form">
+
+<h2>Add New Mobile</h2>
+
+<input
+type="text"
+id="phoneName"
+placeholder="Phone Name">
+
+<input
+type="text"
+id="phonePrice"
+placeholder="Phone Price">
+
+<input
+type="text"
+id="phoneImage"
+placeholder="Image URL">
+
+<button onclick="addMobile()"
+class="btn">
+
+Add Mobile
+
+</button>
+
+</section>
+
+<script type="module">
+
+import { initializeApp }
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+
+getFirestore,
+collection,
+addDoc
+
+}
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+
+apiKey: "AIzaSyCXm59TsEbJ3KxFAcexu3aGAqznauo9eS0",
+
+authDomain: "ars-mobile-shop.firebaseapp.com",
+
+projectId: "ars-mobile-shop",
+
+storageBucket: "ars-mobile-shop.firebasestorage.app",
+
+messagingSenderId: "1053882694515",
+
+appId: "1:1053882694515:web:ee81285f6fcf0f1c722306",
+
+measurementId: "G-VFNPR94GKH"
+
+};
+
+const app =
+initializeApp(firebaseConfig);
+
+const db =
+getFirestore(app);
+
+window.addMobile = async function(){
+
+let name =
+document.getElementById("phoneName")
+.value;
+
+let price =
+document.getElementById("phonePrice")
+.value;
+
+let image =
+document.getElementById("phoneImage")
+.value;
+
+await addDoc(
+
+collection(db,"mobiles"),
+
+{
+
+name:name,
+price:price,
+image:image
+
+}
+
+);
+
+alert("Mobile Added 😄");
+
+}
+
+</script>
+
+</body>
+</html>

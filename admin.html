@@ -19,7 +19,7 @@ href="style.css">
 
 <section class="sell-form">
 
-<h2>Add New Mobile</h2>
+<h2>Admin Panel</h2>
 
 <input
 type="text"
@@ -33,8 +33,32 @@ placeholder="Phone Price">
 
 <input
 type="text"
-id="phoneImage"
-placeholder="Image URL">
+id="phoneRam"
+placeholder="RAM">
+
+<input
+type="text"
+id="phoneRom"
+placeholder="Storage">
+
+<input
+type="text"
+id="phoneBattery"
+placeholder="Battery">
+
+<input
+type="text"
+id="phoneCondition"
+placeholder="Condition">
+
+<input
+type="file"
+id="phoneImageFile">
+
+<textarea
+id="phoneDescription"
+placeholder="Full Description">
+</textarea>
 
 <button onclick="addMobile()"
 class="btn">
@@ -42,6 +66,17 @@ class="btn">
 Add Mobile
 
 </button>
+
+</section>
+
+<section class="categories">
+
+<h2>Manage Mobiles</h2>
+
+<div id="adminMobiles"
+class="category-grid">
+
+</div>
 
 </section>
 
@@ -55,7 +90,10 @@ import {
 
 getFirestore,
 collection,
-addDoc
+addDoc,
+getDocs,
+deleteDoc,
+doc
 
 }
 
@@ -85,19 +123,52 @@ initializeApp(firebaseConfig);
 const db =
 getFirestore(app);
 
+// ADD MOBILE
+
 window.addMobile = async function(){
 
 let name =
-document.getElementById("phoneName")
-.value;
+document.getElementById("phoneName").value;
 
 let price =
-document.getElementById("phonePrice")
-.value;
+document.getElementById("phonePrice").value;
 
-let image =
-document.getElementById("phoneImage")
-.value;
+let ram =
+document.getElementById("phoneRam").value;
+
+let rom =
+document.getElementById("phoneRom").value;
+
+let battery =
+document.getElementById("phoneBattery").value;
+
+let condition =
+document.getElementById("phoneCondition").value;
+
+let description =
+document.getElementById("phoneDescription").value;
+
+// IMAGE FILE
+
+let file =
+document.getElementById("phoneImageFile")
+.files[0];
+
+if(!file){
+
+alert("Select Image");
+
+return;
+
+}
+
+let reader = new FileReader();
+
+reader.readAsDataURL(file);
+
+reader.onload = async function(){
+
+let image = reader.result;
 
 await addDoc(
 
@@ -107,6 +178,11 @@ collection(db,"mobiles"),
 
 name:name,
 price:price,
+ram:ram,
+rom:rom,
+battery:battery,
+condition:condition,
+description:description,
 image:image
 
 }
@@ -114,6 +190,67 @@ image:image
 );
 
 alert("Mobile Added 😄");
+
+location.reload();
+
+}
+
+}
+
+// LOAD MOBILES
+
+async function loadMobiles(){
+
+const querySnapshot =
+await getDocs(collection(db,"mobiles"));
+
+let html="";
+
+querySnapshot.forEach((mobile)=>{
+
+html += `
+
+<div class="category-card">
+
+<img src="${mobile.data().image}">
+
+<h3>${mobile.data().name}</h3>
+
+<p class="price">
+
+৳${mobile.data().price}
+
+</p>
+
+<button class="btn"
+onclick="deleteMobile('${mobile.id}')">
+
+Delete
+
+</button>
+
+</div>
+
+`;
+
+});
+
+document.getElementById("adminMobiles")
+.innerHTML=html;
+
+}
+
+loadMobiles();
+
+// DELETE MOBILE
+
+window.deleteMobile = async function(id){
+
+await deleteDoc(doc(db,"mobiles",id));
+
+alert("Deleted 😄");
+
+location.reload();
 
 }
 

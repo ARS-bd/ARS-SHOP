@@ -2,7 +2,9 @@
 <html lang="en">
 
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
 
@@ -21,7 +23,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
 
 <div class="logo">
 
-<img src="logo.png" class="logo-img">
+<img src="logo.png"
+class="logo-img">
 
 ARS Mobile Shop
 
@@ -45,14 +48,19 @@ ARS Mobile Shop
 
 <div class="hero-text">
 
-<h1>Buy & Sell Used Phones Easily</h1>
+<h1>
+Buy & Sell Used Phones Easily
+</h1>
 
 <p>
 Trusted Used Smartphone Marketplace
 </p>
 
-<a href="mobiles.html" class="btn">
+<a href="mobiles.html"
+class="btn">
+
 Browse Mobiles
+
 </a>
 
 </div>
@@ -61,10 +69,15 @@ Browse Mobiles
 
 <section class="search-section">
 
-<input type="text"
-placeholder="Search mobiles...">
+<input
+type="text"
+id="searchInput"
+placeholder="Search mobiles..."
+onkeyup="searchPhones()">
 
-<button>Search</button>
+<button>
+Search
+</button>
 
 </section>
 
@@ -74,7 +87,7 @@ placeholder="Search mobiles...">
 
 <div class="category-grid">
 
-<div class="category-card">
+<div class="category-card phone-card">
 
 <i class="fa-brands fa-apple"></i>
 
@@ -82,7 +95,7 @@ placeholder="Search mobiles...">
 
 </div>
 
-<div class="category-card">
+<div class="category-card phone-card">
 
 <i class="fa-solid fa-mobile-screen"></i>
 
@@ -90,7 +103,7 @@ placeholder="Search mobiles...">
 
 </div>
 
-<div class="category-card">
+<div class="category-card phone-card">
 
 <i class="fa-solid fa-bolt"></i>
 
@@ -102,11 +115,195 @@ placeholder="Search mobiles...">
 
 </section>
 
+<!-- Auto Slider -->
+
+<section class="slider">
+
+<img id="sliderImage"
+
+src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=1600&auto=format&fit=crop">
+
+</section>
+
+<!-- Sell Form -->
+
+<section class="sell-form">
+
+<h2>Sell Your Phone</h2>
+
+<input type="text"
+placeholder="Phone Model">
+
+<input type="text"
+placeholder="Phone Price">
+
+<input type="text"
+placeholder="Phone Condition">
+
+<button>
+Submit
+</button>
+
+</section>
+
+<!-- Popup -->
+
+<div class="popup"
+id="popup">
+
+<div class="popup-content">
+
+<span class="close"
+onclick="closePopup()">
+
+&times;
+
+</span>
+
+<h2 id="popupTitle"></h2>
+
+<p>
+Premium Used Smartphone
+</p>
+
+<button class="btn">
+Buy Now
+</button>
+
+</div>
+
+</div>
+
+<!-- Messenger Button -->
+
+<a href="https://m.me/jubayermahmudalamin.99"
+
+class="messenger-btn"
+
+target="_blank">
+
+<i class="fab fa-facebook-messenger"></i>
+
+</a>
+
 <footer>
 
-<p>© 2026 ARS Mobile Shop</p>
+<p>
+© 2026 ARS Mobile Shop
+</p>
 
 </footer>
+
+<script>
+
+// Search
+
+function searchPhones(){
+
+let input =
+document.getElementById("searchInput")
+.value.toLowerCase();
+
+let cards =
+document.querySelectorAll(".phone-card");
+
+cards.forEach(card=>{
+
+let text =
+card.innerText.toLowerCase();
+
+if(text.includes(input)){
+
+card.style.display="block";
+
+}else{
+
+card.style.display="none";
+
+}
+
+});
+
+}
+
+// Popup
+
+let phoneCards =
+document.querySelectorAll(".phone-card");
+
+phoneCards.forEach(card=>{
+
+card.addEventListener("click",()=>{
+
+document.getElementById("popup")
+.style.display="flex";
+
+document.getElementById("popupTitle")
+.innerText=card.innerText;
+
+});
+
+});
+
+function closePopup(){
+
+document.getElementById("popup")
+.style.display="none";
+
+}
+
+// Auto Slider
+
+let images=[
+
+'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=1600&auto=format&fit=crop',
+
+'https://images.unsplash.com/photo-1598327105666-5b89351aff97?q=80&w=1600&auto=format&fit=crop',
+
+'https://images.unsplash.com/photo-1580910051074-3eb694886505?q=80&w=1600&auto=format&fit=crop'
+
+];
+
+let index=0;
+
+setInterval(()=>{
+
+index++;
+
+if(index>=images.length){
+
+index=0;
+
+}
+
+document.getElementById("sliderImage")
+.src=images[index];
+
+},3000);
+
+// Favorites
+
+phoneCards.forEach(card=>{
+
+let fav=document.createElement("button");
+
+fav.innerHTML="❤";
+
+fav.classList.add("fav-btn");
+
+card.appendChild(fav);
+
+fav.addEventListener("click",(e)=>{
+
+e.stopPropagation();
+
+fav.classList.toggle("active-fav");
+
+});
+
+});
+
+</script>
 
 </body>
 </html>

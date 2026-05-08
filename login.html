@@ -21,30 +21,12 @@ href="style.css">
 
 <h2>Login Account</h2>
 
-<input
-type="email"
-id="email"
-placeholder="Enter Email">
-
-<input
-type="password"
-id="password"
-placeholder="Enter Password">
-
-<button onclick="login()">
-
-Login
-
-</button>
-
-<br><br>
-
-<a href="signup.html"
+<button onclick="googleLogin()"
 class="btn">
 
-Create New Account
+Login With Google
 
-</a>
+</button>
 
 </section>
 
@@ -58,7 +40,9 @@ import {
 
 getAuth,
 
-signInWithEmailAndPassword
+GoogleAuthProvider,
+
+signInWithPopup
 
 }
 
@@ -84,37 +68,32 @@ measurementId: "G-VFNPR94GKH"
 
 };
 
-// Initialize Firebase
-
 const app =
 initializeApp(firebaseConfig);
 
 const auth =
 getAuth(app);
 
-// Login Function
+const provider =
+new GoogleAuthProvider();
 
-window.login = function(){
+// Google Login
 
-let email =
+window.googleLogin=function(){
 
-document.getElementById("email")
-.value;
+signInWithPopup(auth,provider)
 
-let password =
+.then((result)=>{
 
-document.getElementById("password")
-.value;
+localStorage.setItem(
+"userName",
+result.user.displayName
+);
 
-signInWithEmailAndPassword(
-auth,
-email,
-password
-)
-
-.then((userCredential)=>{
-
-alert("Login Successful 😄");
+localStorage.setItem(
+"userPhoto",
+result.user.photoURL
+);
 
 window.location.href="index.html";
 

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>My Favorites</title>
+
+<link rel="stylesheet"
+href="style.css">
+
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">
+
+<img src="logo.png"
+class="logo-img">
+
+ARS Mobile Shop
+
+</div>
+
+<nav>
+
+<a href="index.html">Home</a>
+
+<a href="mobiles.html">Mobiles</a>
+
+<a href="orders.html">My Orders</a>
+
+</nav>
+
+</header>
+
+<section class="categories">
+
+<h2>My Favorite Phones</h2>
+
+<div id="favoritesList"
+class="category-grid">
+
+</div>
+
+</section>
+
+<script type="module">
+
+import { initializeApp }
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+
+getAuth,
+onAuthStateChanged
+
+}
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+import {
+
+getFirestore,
+collection,
+getDocs
+
+}
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+
+apiKey: "AIzaSyCXm59TsEbJ3KxFAcexu3aGAqznauo9eS0",
+
+authDomain: "ars-mobile-shop.firebaseapp.com",
+
+projectId: "ars-mobile-shop",
+
+storageBucket: "ars-mobile-shop.firebasestorage.app",
+
+messagingSenderId: "1053882694515",
+
+appId: "1:1053882694515:web:ee81285f6fcf0f1c722306",
+
+measurementId: "G-VFNPR94GKH"
+
+};
+
+const app =
+initializeApp(firebaseConfig);
+
+const auth =
+getAuth(app);
+
+const db =
+getFirestore(app);
+
+onAuthStateChanged(auth,async(user)=>{
+
+if(user){
+
+const querySnapshot = await getDocs(
+
+collection(
+db,
+"users",
+user.uid,
+"favorites"
+)
+
+);
+
+let html="";
+
+querySnapshot.forEach((doc)=>{
+
+html += `
+
+<div class="category-card">
+
+<h3>${doc.data().phone}</h3>
+
+</div>
+
+`;
+
+});
+
+document.getElementById("favoritesList")
+.innerHTML=html;
+
+}
+
+});
+
+</script>
+
+</body>
+</html>

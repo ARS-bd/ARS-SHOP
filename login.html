@@ -21,12 +21,40 @@ href="style.css">
 
 <h2>Login Account</h2>
 
+<input
+type="email"
+id="email"
+placeholder="Enter Email">
+
+<input
+type="password"
+id="password"
+placeholder="Enter Password">
+
+<button onclick="emailLogin()"
+class="btn">
+
+Login With Email
+
+</button>
+
+<br><br>
+
 <button onclick="googleLogin()"
 class="btn">
 
 Login With Google
 
 </button>
+
+<br><br>
+
+<a href="signup.html"
+class="btn">
+
+Create New Account
+
+</a>
 
 </section>
 
@@ -42,11 +70,25 @@ getAuth,
 
 GoogleAuthProvider,
 
-signInWithPopup
+signInWithPopup,
+
+signInWithEmailAndPassword
 
 }
 
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+import {
+
+getFirestore,
+
+doc,
+
+getDoc
+
+}
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 // Firebase Config
 
@@ -74,6 +116,9 @@ initializeApp(firebaseConfig);
 const auth =
 getAuth(app);
 
+const db =
+getFirestore(app);
+
 const provider =
 new GoogleAuthProvider();
 
@@ -94,6 +139,72 @@ localStorage.setItem(
 "userPhoto",
 result.user.photoURL
 );
+
+localStorage.setItem(
+"userEmail",
+result.user.email
+);
+
+window.location.href="index.html";
+
+})
+
+.catch((error)=>{
+
+alert(error.message);
+
+});
+
+}
+
+// Email Login
+
+window.emailLogin = async function(){
+
+let email =
+
+document.getElementById("email")
+.value;
+
+let password =
+
+document.getElementById("password")
+.value;
+
+signInWithEmailAndPassword(
+auth,
+email,
+password
+)
+
+.then(async(userCredential)=>{
+
+const user = userCredential.user;
+
+const docRef =
+doc(db,"users",user.uid);
+
+const docSnap =
+await getDoc(docRef);
+
+if(docSnap.exists()){
+
+localStorage.setItem(
+"userName",
+docSnap.data().name
+);
+
+localStorage.setItem(
+"userNumber",
+docSnap.data().number
+);
+
+localStorage.setItem(
+"userPhoto",
+"https://cdn-icons-png.flaticon.com/512/149/149071.png"
+);
+
+}
 
 window.location.href="index.html";
 

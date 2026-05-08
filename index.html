@@ -10,7 +10,8 @@ content="width=device-width, initial-scale=1.0">
 
 <title>ARS Mobile Shop</title>
 
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet"
+href="style.css">
 
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -44,6 +45,8 @@ ARS Mobile Shop
 
 </header>
 
+<!-- Hero -->
+
 <section class="hero">
 
 <div class="hero-text">
@@ -67,6 +70,8 @@ Browse Mobiles
 
 </section>
 
+<!-- Search -->
+
 <section class="search-section">
 
 <input
@@ -80,6 +85,8 @@ Search
 </button>
 
 </section>
+
+<!-- Categories -->
 
 <section class="categories">
 
@@ -125,23 +132,31 @@ src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=1600&au
 
 </section>
 
-<!-- Sell Form -->
+<!-- Sell Phone Form -->
 
 <section class="sell-form">
 
 <h2>Sell Your Phone</h2>
 
-<input type="text"
+<input
+type="text"
+id="phoneModel"
 placeholder="Phone Model">
 
-<input type="text"
+<input
+type="text"
+id="phonePrice"
 placeholder="Phone Price">
 
-<input type="text"
+<input
+type="text"
+id="phoneCondition"
 placeholder="Phone Condition">
 
-<button>
+<button onclick="sendWhatsApp()">
+
 Submit
+
 </button>
 
 </section>
@@ -302,6 +317,45 @@ fav.classList.toggle("active-fav");
 });
 
 });
+
+// WhatsApp Sell Form
+
+function sendWhatsApp(){
+
+let model =
+
+document.getElementById("phoneModel")
+.value;
+
+let price =
+
+document.getElementById("phonePrice")
+.value;
+
+let condition =
+
+document.getElementById("phoneCondition")
+.value;
+
+let message =
+
+`📱 Phone Sell Request %0A%0A
+
+📌 Model: ${model}%0A
+
+💰 Price: ${price}%0A
+
+⚡ Condition: ${condition}`;
+
+window.open(
+
+`https://wa.me/8801626775979?text=${message}`,
+
+'_blank'
+
+);
+
+}
 
 </script>
 

@@ -40,6 +40,8 @@ ARS Mobile Shop
 
 <a href="orders.html">Orders</a>
 
+<a href="admin.html">Admin</a>
+
 </nav>
 
 </header>
@@ -47,6 +49,27 @@ ARS Mobile Shop
 <section class="categories">
 
 <h2>Available Mobiles</h2>
+
+<input
+type="text"
+id="mobileSearch"
+
+placeholder="Search Mobile..."
+
+style="
+width:100%;
+max-width:450px;
+padding:18px;
+border:none;
+outline:none;
+border-radius:14px;
+margin-bottom:40px;
+background:#1e293b;
+color:white;
+font-size:16px;
+"
+
+onkeyup="searchMobiles()">
 
 <div id="mobilesList"
 class="category-grid">
@@ -95,6 +118,8 @@ initializeApp(firebaseConfig);
 const db =
 getFirestore(app);
 
+// LOAD MOBILES
+
 async function loadMobiles(){
 
 const querySnapshot = await getDocs(
@@ -137,28 +162,28 @@ style="display:none;">
 
 <p>
 
-RAM:
+📱 RAM:
 ${doc.data().ram}
 
 </p>
 
 <p>
 
-Storage:
+💾 Storage:
 ${doc.data().rom}
 
 </p>
 
 <p>
 
-Battery:
+🔋 Battery:
 ${doc.data().battery}
 
 </p>
 
 <p>
 
-Condition:
+⚡ Condition:
 ${doc.data().condition}
 
 </p>
@@ -168,6 +193,8 @@ ${doc.data().condition}
 ${doc.data().description}
 
 </p>
+
+<br>
 
 <a href="https://wa.me/8801626775979"
 class="btn">
@@ -191,6 +218,8 @@ document.getElementById("mobilesList")
 
 loadMobiles();
 
+// DETAILS
+
 window.toggleDetails = function(id){
 
 let box =
@@ -205,6 +234,37 @@ box.style.display="block";
 box.style.display="none";
 
 }
+
+}
+
+// SEARCH
+
+window.searchMobiles=function(){
+
+let input =
+
+document.getElementById("mobileSearch")
+.value.toLowerCase();
+
+let cards =
+document.querySelectorAll(".category-card");
+
+cards.forEach(card=>{
+
+let text =
+card.innerText.toLowerCase();
+
+if(text.includes(input)){
+
+card.style.display="block";
+
+}else{
+
+card.style.display="none";
+
+}
+
+});
 
 }
 

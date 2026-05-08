@@ -116,6 +116,13 @@ Search
 
 <h3>iPhone</h3>
 
+<button class="fav-btn"
+onclick="saveFavorite('iPhone')">
+
+❤ Favorite
+
+</button>
+
 </div>
 
 <div class="category-card phone-card">
@@ -124,6 +131,13 @@ Search
 
 <h3>Samsung</h3>
 
+<button class="fav-btn"
+onclick="saveFavorite('Samsung')">
+
+❤ Favorite
+
+</button>
+
 </div>
 
 <div class="category-card phone-card">
@@ -131,6 +145,13 @@ Search
 <i class="fa-solid fa-bolt"></i>
 
 <h3>Xiaomi</h3>
+
+<button class="fav-btn"
+onclick="saveFavorite('Xiaomi')">
+
+❤ Favorite
+
+</button>
 
 </div>
 
@@ -197,8 +218,11 @@ onclick="closePopup()">
 Premium Used Smartphone
 </p>
 
-<button class="btn">
+<button class="btn"
+onclick="saveOrder(document.getElementById('popupTitle').innerText)">
+
 Buy Now
+
 </button>
 
 </div>
@@ -283,7 +307,7 @@ document.getElementById("popup")
 
 }
 
-// Auto Slider
+// Slider
 
 let images=[
 
@@ -311,28 +335,6 @@ document.getElementById("sliderImage")
 .src=images[index];
 
 },3000);
-
-// Favorites
-
-phoneCards.forEach(card=>{
-
-let fav=document.createElement("button");
-
-fav.innerHTML="❤";
-
-fav.classList.add("fav-btn");
-
-card.appendChild(fav);
-
-fav.addEventListener("click",(e)=>{
-
-e.stopPropagation();
-
-fav.classList.toggle("active-fav");
-
-});
-
-});
 
 // WhatsApp
 
@@ -373,7 +375,71 @@ window.open(
 
 }
 
-// User Profile
+</script>
+
+<!-- FIREBASE -->
+
+<script type="module">
+
+import { initializeApp }
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+
+getAuth,
+onAuthStateChanged
+
+}
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+import {
+
+getFirestore,
+collection,
+addDoc
+
+}
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+
+apiKey: "AIzaSyCXm59TsEbJ3KxFAcexu3aGAqznauo9eS0",
+
+authDomain: "ars-mobile-shop.firebaseapp.com",
+
+projectId: "ars-mobile-shop",
+
+storageBucket: "ars-mobile-shop.firebasestorage.app",
+
+messagingSenderId: "1053882694515",
+
+appId: "1:1053882694515:web:ee81285f6fcf0f1c722306",
+
+measurementId: "G-VFNPR94GKH"
+
+};
+
+const app =
+initializeApp(firebaseConfig);
+
+const auth =
+getAuth(app);
+
+const db =
+getFirestore(app);
+
+let currentUser=null;
+
+// AUTH
+
+onAuthStateChanged(auth,(user)=>{
+
+if(user){
+
+currentUser=user;
 
 let userName =
 localStorage.getItem("userName");
@@ -383,8 +449,6 @@ localStorage.getItem("userPhoto");
 
 let userNumber =
 localStorage.getItem("userNumber");
-
-if(userName){
 
 document.getElementById("userProfile")
 .innerHTML=`
@@ -408,9 +472,9 @@ id="dropdownMenu">
 
 <a href="#">My Account</a>
 
-<a href="#">My Favorites</a>
+<a href="favorites.html">My Favorites</a>
 
-<a href="#">My Orders</a>
+<a href="orders.html">My Orders</a>
 
 <a href="#">Recently Viewed</a>
 
@@ -434,18 +498,88 @@ document.querySelector(".signup-btn")
 
 }
 
-// Toggle
+});
 
-function toggleMenu(){
+// FAVORITES
+
+window.saveFavorite = async function(phone){
+
+if(!currentUser){
+
+alert("Please login first");
+
+return;
+
+}
+
+await addDoc(
+
+collection(
+db,
+"users",
+currentUser.uid,
+"favorites"
+),
+
+{
+
+phone:phone,
+time:Date.now()
+
+}
+
+);
+
+alert("Added to Favorites 😄");
+
+}
+
+// ORDERS
+
+window.saveOrder = async function(phone){
+
+if(!currentUser){
+
+alert("Please login first");
+
+return;
+
+}
+
+await addDoc(
+
+collection(
+db,
+"users",
+currentUser.uid,
+"orders"
+),
+
+{
+
+phone:phone,
+time:Date.now()
+
+}
+
+);
+
+alert("Order Placed 😄");
+
+}
+
+// MENU
+
+window.toggleMenu=function(){
 
 document.getElementById("dropdownMenu")
 .classList.toggle("show-menu");
 
 }
 
-// Logout
+// LOGOUT
 
-function logout(){
+window.logout=function(){
 
 localStorage.clear();
 

@@ -13,9 +13,6 @@ content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet"
 href="style.css">
 
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
 </head>
 
 <body>
@@ -35,141 +32,128 @@ ARS Mobile Shop
 
 <a href="index.html">Home</a>
 
-<a href="mobiles.html">Mobiles</a>
-
 <a href="about.html">About</a>
 
 <a href="contact.html">Contact</a>
+
+<a href="favorites.html">Favorites</a>
+
+<a href="orders.html">Orders</a>
 
 </nav>
 
 </header>
 
-<section class="products-page">
+<section class="categories">
 
-<h1>Available Mobiles</h1>
+<h2>Available Mobiles</h2>
 
-<div class="category-grid">
-
-<!-- Phone 1 -->
-
-<div class="category-card phone-card">
-
-<img
-src="https://images.unsplash.com/photo-1592750475338-74b7b21085ab?q=80&w=1200&auto=format&fit=crop"
-
-style="
-width:100%;
-height:250px;
-object-fit:cover;
-border-radius:16px;
-margin-bottom:20px;
-">
-
-<h3>iPhone 14 Pro Max</h3>
-
-<p style="
-font-size:22px;
-margin-top:10px;
-color:#5eead4;
-">
-
-৳92,000
-
-</p>
-
-<a href="https://wa.me/8801626775979"
-class="btn">
-
-Contact Seller
-
-</a>
-
-</div>
-
-<!-- Phone 2 -->
-
-<div class="category-card phone-card">
-
-<img
-src="https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?q=80&w=1200&auto=format&fit=crop"
-
-style="
-width:100%;
-height:250px;
-object-fit:cover;
-border-radius:16px;
-margin-bottom:20px;
-">
-
-<h3>Samsung S24 Ultra</h3>
-
-<p style="
-font-size:22px;
-margin-top:10px;
-color:#5eead4;
-">
-
-৳108,000
-
-</p>
-
-<a href="https://wa.me/8801626775979"
-class="btn">
-
-Contact Seller
-
-</a>
-
-</div>
-
-<!-- Phone 3 -->
-
-<div class="category-card phone-card">
-
-<img
-src="https://images.unsplash.com/photo-1580910051074-3eb694886505?q=80&w=1200&auto=format&fit=crop"
-
-style="
-width:100%;
-height:250px;
-object-fit:cover;
-border-radius:16px;
-margin-bottom:20px;
-">
-
-<h3>Xiaomi Redmi Note 13</h3>
-
-<p style="
-font-size:22px;
-margin-top:10px;
-color:#5eead4;
-">
-
-৳28,000
-
-</p>
-
-<a href="https://wa.me/8801626775979"
-class="btn">
-
-Contact Seller
-
-</a>
-
-</div>
+<div id="mobilesList"
+class="category-grid">
 
 </div>
 
 </section>
 
-<footer>
+<script type="module">
 
-<p>
-© 2026 ARS Mobile Shop
+import { initializeApp }
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+
+getFirestore,
+collection,
+getDocs
+
+}
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+
+apiKey: "AIzaSyCXm59TsEbJ3KxFAcexu3aGAqznauo9eS0",
+
+authDomain: "ars-mobile-shop.firebaseapp.com",
+
+projectId: "ars-mobile-shop",
+
+storageBucket: "ars-mobile-shop.firebasestorage.app",
+
+messagingSenderId: "1053882694515",
+
+appId: "1:1053882694515:web:ee81285f6fcf0f1c722306",
+
+measurementId: "G-VFNPR94GKH"
+
+};
+
+const app =
+initializeApp(firebaseConfig);
+
+const db =
+getFirestore(app);
+
+async function loadMobiles(){
+
+const querySnapshot = await getDocs(
+
+collection(db,"mobiles")
+
+);
+
+let html="";
+
+querySnapshot.forEach((doc)=>{
+
+html += `
+
+<div class="category-card">
+
+<img src="${doc.data().image}"
+
+style="
+width:100%;
+height:250px;
+object-fit:cover;
+border-radius:16px;
+margin-bottom:20px;
+">
+
+<h3>${doc.data().name}</h3>
+
+<p style="
+font-size:22px;
+margin-top:10px;
+color:#5eead4;
+">
+
+৳${doc.data().price}
+
 </p>
 
-</footer>
+<a href="https://wa.me/8801626775979"
+class="btn">
+
+Contact Seller
+
+</a>
+
+</div>
+
+`;
+
+});
+
+document.getElementById("mobilesList")
+.innerHTML=html;
+
+}
+
+loadMobiles();
+
+</script>
 
 </body>
 </html>
